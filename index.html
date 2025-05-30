@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
  body {
      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -291,99 +290,6 @@
      padding: 15px;
      margin-bottom: 15px;
  }
- 
- /* Stili per la pagina statistiche */
- .stats-modal {
-     position: fixed;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
-     background-color: rgba(0,0,0,0.5);
-     display: none;
-     z-index: 1000;
-     overflow-y: auto;
- }
- 
- .stats-content {
-     position: relative;
-     background-color: white;
-     margin: 2% auto;
-     padding: 20px;
-     width: 90%;
-     max-width: 1400px;
-     min-height: 90%;
-     border-radius: 15px;
- }
- 
- .stats-header {
-     background: linear-gradient(135deg, #1e3c72, #2a5298);
-     color: white;
-     padding: 20px;
-     border-radius: 10px;
-     margin-bottom: 20px;
-     display: flex;
-     justify-content: space-between;
-     align-items: center;
- }
- 
- .close-stats {
-     color: white;
-     font-size: 28px;
-     font-weight: bold;
-     cursor: pointer;
- }
- 
- .close-stats:hover {
-     color: #f0f0f0;
- }
- 
- .stats-grid {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-     gap: 20px;
- }
- 
- .stats-card {
-     background: white;
-     border-radius: 10px;
-     padding: 20px;
-     box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-     border-left: 4px solid #2a5298;
- }
- 
- .chart-container {
-     position: relative;
-     height: 300px;
-     margin-top: 20px;
- }
- 
- .stats-summary {
-     display: grid;
-     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-     gap: 15px;
-     margin-bottom: 30px;
- }
- 
- .summary-item {
-     background: linear-gradient(135deg, #e7f3ff, #f0f8ff);
-     padding: 20px;
-     border-radius: 10px;
-     text-align: center;
-     box-shadow: 0 4px 10px rgba(0,0,0,0.05);
- }
- 
- .summary-value {
-     font-size: 36px;
-     font-weight: bold;
-     color: #1e3c72;
- }
- 
- .summary-label {
-     font-size: 14px;
-     color: #6c757d;
-     margin-top: 5px;
- }
 
  /* Stili per modal Rese */
  .yields-modal {
@@ -660,70 +566,9 @@
      <button type="button" class="btn btn-outline-secondary btn-lg me-3" id="anteprima-stampa">
          <i class="bi bi-printer"></i> Anteprima Stampa
      </button>
-     <button type="button" class="btn btn-info btn-lg me-3" id="apri-statistiche">
-         <i class="bi bi-bar-chart-line"></i> Statistiche Interattive
-     </button>
      <button type="button" class="btn btn-outline-danger btn-lg" id="reset-programma">
          <i class="bi bi-arrow-clockwise"></i> Reset Programma
      </button>
- </div>
-</div>
-
-<!-- Modal Statistiche -->
-<div id="stats-modal" class="stats-modal">
- <div class="stats-content">
-     <div class="stats-header">
-         <h2><i class="bi bi-bar-chart-line"></i> Statistiche Interattive Produzione</h2>
-         <span class="close-stats">&times;</span>
-     </div>
-     
-     <div class="stats-summary" id="stats-summary">
-         <!-- Sommario statistiche caricate dinamicamente -->
-     </div>
-     
-     <div class="stats-grid">
-         <div class="stats-card">
-             <h4>Distribuzione Produzione per Fornitore</h4>
-             <div class="chart-container">
-                 <canvas id="chartFornitori"></canvas>
-             </div>
-         </div>
-         
-         <div class="stats-card">
-             <h4>Rese Medie per Tipo Prodotto</h4>
-             <div class="chart-container">
-                 <canvas id="chartRese"></canvas>
-             </div>
-         </div>
-         
-         <div class="stats-card">
-             <h4>Distribuzione Certificazioni</h4>
-             <div class="chart-container">
-                 <canvas id="chartCertificazioni"></canvas>
-             </div>
-         </div>
-         
-         <div class="stats-card">
-             <h4>Timeline Produzione</h4>
-             <div class="chart-container">
-                 <canvas id="chartTimeline"></canvas>
-             </div>
-         </div>
-         
-         <div class="stats-card">
-             <h4>Efficienza Linee di Produzione</h4>
-             <div class="chart-container">
-                 <canvas id="chartEfficienza"></canvas>
-             </div>
-         </div>
-         
-         <div class="stats-card">
-             <h4>Analisi Destinazioni Prodotti</h4>
-             <div class="chart-container">
-                 <canvas id="chartDestinazioni"></canvas>
-             </div>
-         </div>
-     </div>
  </div>
 </div>
 
@@ -774,80 +619,80 @@
                      <td><input type="number" class="yield-input" data-type="prima" data-month="10" min="0" max="100" step="0.1"></td>
                      <td><input type="number" class="yield-input" data-type="prima" data-month="11" min="0" max="100" step="0.1"></td>
                      <td><input type="number" class="yield-input" data-type="prima" data-month="12" min="0" max="100" step="0.1"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-    <div class="yields-section">
-        <h5><i class="bi bi-droplet"></i> Rese Succo 2ª (%)</h5>
-        <table class="yields-table">
-            <thead>
-                <tr>
-                    <th>Mese</th>
-                    <th>Gen</th>
-                    <th>Feb</th>
-                    <th>Mar</th>
-                    <th>Apr</th>
-                    <th>Mag</th>
-                    <th>Giu</th>
-                    <th>Lug</th>
-                    <th>Ago</th>
-                    <th>Set</th>
-                    <th>Ott</th>
-                    <th>Nov</th>
-                    <th>Dic</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Resa %</strong></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="1" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="2" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="3" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="4" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="5" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="6" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="7" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="8" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="9" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="10" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="11" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="seconda" data-month="12" min="0" max="100" step="0.1"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-    <div class="yields-section">
-        <h5><i class="bi bi-droplet"></i> Rese Torchiato (%)</h5>
-        <table class="yields-table">
-            <thead>
-                <tr>
-                    <th>Mese</th>
-                    <th>Gen</th>
-                    <th>Feb</th>
-                    <th>Mar</th>
-                    <th>Apr</th>
-                    <th>Mag</th>
-                    <th>Giu</th>
-                    <th>Lug</th>
-                    <th>Ago</th>
-                    <th>Set</th>
-                    <th>Ott</th>
-                    <th>Nov</th>
-                    <th>Dic</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Resa %</strong></td>
-                    <td><input type="number" class="yield-input" data-type="torchiato" data-month="1" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="torchiato" data-month="2" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="torchiato" data-month="3" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="torchiato" data-month="4" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="torchiato" data-month="5" min="0" max="100" step="0.1"></td>
-                    <td><input type="number" class="yield-input" data-type="torchiato" data-month="6" min="0" max="100" step="0.1"></td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+     
+     <div class="yields-section">
+         <h5><i class="bi bi-droplet"></i> Rese Succo 2ª (%)</h5>
+         <table class="yields-table">
+             <thead>
+                 <tr>
+                     <th>Mese</th>
+                     <th>Gen</th>
+                     <th>Feb</th>
+                     <th>Mar</th>
+                     <th>Apr</th>
+                     <th>Mag</th>
+                     <th>Giu</th>
+                     <th>Lug</th>
+                     <th>Ago</th>
+                     <th>Set</th>
+                     <th>Ott</th>
+                     <th>Nov</th>
+                     <th>Dic</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                     <td><strong>Resa %</strong></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="1" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="2" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="3" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="4" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="5" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="6" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="7" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="8" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="9" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="10" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="11" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="seconda" data-month="12" min="0" max="100" step="0.1"></td>
+                 </tr>
+             </tbody>
+         </table>
+     </div>
+     
+     <div class="yields-section">
+         <h5><i class="bi bi-droplet"></i> Rese Torchiato (%)</h5>
+         <table class="yields-table">
+             <thead>
+                 <tr>
+                     <th>Mese</th>
+                     <th>Gen</th>
+                     <th>Feb</th>
+                     <th>Mar</th>
+                     <th>Apr</th>
+                     <th>Mag</th>
+                     <th>Giu</th>
+                     <th>Lug</th>
+                     <th>Ago</th>
+                     <th>Set</th>
+                     <th>Ott</th>
+                     <th>Nov</th>
+                     <th>Dic</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <tr>
+                     <td><strong>Resa %</strong></td>
+                     <td><input type="number" class="yield-input" data-type="torchiato" data-month="1" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="torchiato" data-month="2" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="torchiato" data-month="3" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="torchiato" data-month="4" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="torchiato" data-month="5" min="0" max="100" step="0.1"></td>
+                     <td><input type="number" class="yield-input" data-type="torchiato" data-month="6" min="0" max="100" step="0.1"></td>
                     <td><input type="number" class="yield-input" data-type="torchiato" data-month="7" min="0" max="100" step="0.1"></td>
                     <td><input type="number" class="yield-input" data-type="torchiato" data-month="8" min="0" max="100" step="0.1"></td>
                     <td><input type="number" class="yield-input" data-type="torchiato" data-month="9" min="0" max="100" step="0.1"></td>
@@ -1254,8 +1099,6 @@ $(document).ready(function() {
  
  let sumDetailsSeconda = {};
  let sumDetailsTorchiato = {};
- let chartsInitialized = false;
- let charts = {};
  
  // Variabili per gestione rese
  let yieldsData = {};
@@ -1422,8 +1265,7 @@ $(document).ready(function() {
              selectB.append(`<option value="${combo}">${label}</option>`);
          }
      }
-     
-     // Combinazioni di 3 fornitori
+  // Combinazioni di 3 fornitori
      for (let i = 0; i < fornitori.length; i++) {
          for (let j = i + 1; j < fornitori.length; j++) {
              for (let k = j + 1; k < fornitori.length; k++) {
@@ -1891,7 +1733,7 @@ $(document).ready(function() {
          }
      });
      
-     // Gestione menu destinazioni multiple per succo 1ª - MODIFICATA: rimossa logica per concentrato
+     // Gestione menu destinazioni multiple per succo 1ª
      supplierElement.find('.destinazione-prima').on('change', function() {
          const selectedValues = $(this).val() || [];
          const container = $(this).parent();
@@ -1904,7 +1746,7 @@ $(document).ready(function() {
          }
      });
      
-     // Gestione menu destinazioni per seconda - MODIFICATA: rimossa logica per concentrato
+     // Gestione menu destinazioni per seconda
      supplierElement.find('.destinazione-seconda').change(function() {
          const container = $(this).parent();
          const altroField = container.find('.altra-destinazione');
@@ -2041,8 +1883,7 @@ $(document).ready(function() {
      } else {
          // Reset solo se non è un valore da combinazione
          const quantitaPrimaField = supplierElement.find('.quantita-prima');
-         if (!quantitaPrimaField.hasClass('combination-result')) {
-             quantitaPrimaField.val('');
+         if (!quantitaPrimaField.hasClass('combination-result')) {quantitaPrimaField.val('');
          }
      }
      
@@ -2399,20 +2240,6 @@ $(document).ready(function() {
      });
  }
  
- // Gestione statistiche interattive
- function openStatistics() {
-     $('#stats-modal').fadeIn();
-     if (!chartsInitialized) {
-         initializeCharts();
-         chartsInitialized = true;
-     }
-     updateStatistics();
- }
- 
- function closeStatistics() {
-     $('#stats-modal').fadeOut();
- }
- 
  // Gestione modal Rese
  function openYieldsModal() {
      const selectedAgrume = $('#tipo-agrume-giornaliero').val();
@@ -2513,319 +2340,12 @@ $(document).ready(function() {
          $('.yield-input').val('');
          
          const selectedAgrume = $('#tipo-agrume-giornaliero').val();
-       if (selectedAgrume && yieldsData[selectedAgrume]) {
+         if (selectedAgrume && yieldsData[selectedAgrume]) {
              delete yieldsData[selectedAgrume];
          }
          
          alert('Dati di resa cancellati');
      }
- }
- 
- function initializeCharts() {
-     // Inizializza i grafici
-     const ctxFornitori = document.getElementById('chartFornitori').getContext('2d');
-     const ctxRese = document.getElementById('chartRese').getContext('2d');
-     const ctxCertificazioni = document.getElementById('chartCertificazioni').getContext('2d');
-     const ctxTimeline = document.getElementById('chartTimeline').getContext('2d');
-     const ctxEfficienza = document.getElementById('chartEfficienza').getContext('2d');
-     const ctxDestinazioni = document.getElementById('chartDestinazioni').getContext('2d');
-     
-     charts.fornitori = new Chart(ctxFornitori, {
-         type: 'pie',
-         data: {
-             labels: [],
-             datasets: [{
-                 label: 'Quantità trasformata (kg)',
-                 data: [],
-                 backgroundColor: [
-                     '#FF6384',
-                     '#36A2EB',
-                     '#FFCE56',
-                     '#4BC0C0',
-                     '#9966FF',
-                     '#FF9F40',
-                     '#FF6B6B',
-                     '#4ECDC4'
-                 ]
-             }]
-         },
-         options: {
-             responsive: true,
-             maintainAspectRatio: false,
-             plugins: {
-                 legend: {
-                     position: 'bottom'
-                 }
-             }
-         }
-     });
-     
-     charts.rese = new Chart(ctxRese, {
-         type: 'bar',
-         data: {
-             labels: ['Succo 1ª', 'Succo 2ª', 'Torchiato'],
-             datasets: [{
-                 label: 'Resa Media %',
-                 data: [],
-                 backgroundColor: ['#28a745', '#ffc107', '#17a2b8']
-             }]
-         },
-         options: {
-             responsive: true,
-             maintainAspectRatio: false,
-             scales: {
-                 y: {
-                     beginAtZero: true,
-                     max: 50
-                 }
-             }
-         }
-     });
-     
-     charts.certificazioni = new Chart(ctxCertificazioni, {
-         type: 'doughnut',
-         data: {
-             labels: [],
-             datasets: [{
-                 label: 'Distribuzione Certificazioni',
-                 data: [],
-                 backgroundColor: [
-                     '#28a745',
-                     '#17a2b8',
-                     '#ffc107',
-                     '#dc3545',
-                     '#6f42c1',
-                     '#fd7e14'
-                 ]
-             }]
-         },
-         options: {
-             responsive: true,
-             maintainAspectRatio: false,
-             plugins: {
-                 legend: {
-                     position: 'bottom'
-                 }
-             }
-         }
-     });
-     
-     charts.timeline = new Chart(ctxTimeline, {
-         type: 'bar',
-         data: {
-             labels: [],
-             datasets: [{
-                 label: 'Durata Lavorazione (ore)',
-                 data: [],
-                 backgroundColor: '#6c757d'
-             }]
-         },
-         options: {
-             responsive: true,
-             maintainAspectRatio: false,
-             indexAxis: 'y',
-             scales: {
-                 x: {
-                     beginAtZero: true
-                 }
-             }
-         }
-     });
-     
-     charts.efficienza = new Chart(ctxEfficienza, {
-         type: 'radar',
-         data: {
-             labels: [],
-             datasets: [{
-                 label: 'Efficienza (%)',
-                 data: [],
-                 backgroundColor: 'rgba(42, 82, 152, 0.2)',
-                 borderColor: '#2a5298',
-                 pointBackgroundColor: '#2a5298'
-             }]
-         },
-         options: {
-             responsive: true,
-             maintainAspectRatio: false,
-             scales: {
-                 r: {
-                     beginAtZero: true,
-                     max: 100
-                 }
-             }
-         }
-     });
-     
-     charts.destinazioni = new Chart(ctxDestinazioni, {
-         type: 'bar',
-         data: {
-             labels: [],
-             datasets: [{
-                 label: 'Quantità per Destinazione (kg)',
-                 data: [],
-                 backgroundColor: '#20c997'
-             }]
-         },
-         options: {
-             responsive: true,
-             maintainAspectRatio: false,
-             scales: {
-                 y: {
-                     beginAtZero: true
-                 }
-             }
-         }
-     });
- }
- 
- function updateStatistics() {
-     const programData = collectProgramData();
-     
-     const summaryHtml = `
-         <div class="summary-item">
-             <div class="summary-value">${programData.fornitori.length}</div>
-             <div class="summary-label">Fornitori Totali</div>
-         </div>
-         <div class="summary-item">
-             <div class="summary-value">${programData.trasformataTotale.toLocaleString()}</div>
-             <div class="summary-label">Kg Trasformati</div>
-         </div>
-         <div class="summary-item">
-             <div class="summary-value">${programData.giacenzaTotale.toLocaleString()}</div>
-             <div class="summary-label">Kg Giacenza</div>
-         </div>
-         <div class="summary-item">
-             <div class="summary-value">${calculateTotalEfficiency(programData).toFixed(1)}%</div>
-             <div class="summary-label">Efficienza Media</div>
-         </div>
-     `;
-     $('#stats-summary').html(summaryHtml);
-     
-     updateChartsData(programData);
- }
- 
- function calculateTotalEfficiency(data) {
-     let totalEfficiency = 0;
-     let count = 0;
-     
-     data.fornitori.forEach(f => {
-         if (f.quantitaTrasformata > 0 && f.quantitaEntrata > 0) {
-             const efficiency = (f.quantitaTrasformata / f.quantitaEntrata) * 100;
-             totalEfficiency += efficiency;
-             count++;
-         }
-     });
-     
-     return count > 0 ? totalEfficiency / count : 0;
- }
- 
- function updateChartsData(data) {
-     // Grafico Fornitori
-     const fornitoriLabels = [];
-     const fornitoriData = [];
-     
-     data.fornitori.forEach(f => {
-         const nome = f.nome === 'ALTRO' ? f.altroNome : f.nome;
-         if (nome && f.quantitaTrasformata > 0) {
-             fornitoriLabels.push(nome);
-             fornitoriData.push(f.quantitaTrasformata);
-         }
-     });
-     
-     charts.fornitori.data.labels = fornitoriLabels;
-     charts.fornitori.data.datasets[0].data = fornitoriData;
-     charts.fornitori.update();
-     
-     // Grafico Rese
-     let resePrima = 0, reseSeconda = 0, reseTorchiato = 0;
-     let countRese = 0, countBOE = 0;
-     
-     data.fornitori.forEach(f => {
-         if (f.quantitaTrasformata > 0) {
-             resePrima += f.rese.prima;
-             reseTorchiato += f.rese.torchiato;
-             countRese++;
-             
-             if (f.lineaTrasformazione === 'BOE/1100') {
-                 reseSeconda += f.rese.seconda;
-                 countBOE++;
-             }
-         }
-     });
-     
-     if (countRese > 0) {
-         charts.rese.data.datasets[0].data = [
-             (resePrima / countRese).toFixed(1),
-             countBOE > 0 ? (reseSeconda / countBOE).toFixed(1) : 0,
-             (reseTorchiato / countRese).toFixed(1)
-         ];
-     }
-     charts.rese.update();
-     
-     // Grafico Certificazioni
-     const certificazioni = {};
-     data.fornitori.forEach(f => {
-         if (f.certificazione) {
-             certificazioni[f.certificazione] = (certificazioni[f.certificazione] || 0) + 1;
-         }
-     });
-     
-     charts.certificazioni.data.labels = Object.keys(certificazioni);
-     charts.certificazioni.data.datasets[0].data = Object.values(certificazioni);
-     charts.certificazioni.update();
-     
-     // Grafico Timeline
-     const timelineLabels = [];
-     const timelineData = [];
-     
-     data.fornitori.forEach(f => {
-         const nome = f.nome === 'ALTRO' ? f.altroNome : f.nome;
-         if (nome && f.durataLavorazione) {
-             const durata = f.durataLavorazione.match(/(\d+)h/);
-             if (durata) {
-                 timelineLabels.push(nome);
-                 timelineData.push(parseInt(durata[1]));
-             }
-         }
-     });
-     
-     charts.timeline.data.labels = timelineLabels;
-     charts.timeline.data.datasets[0].data = timelineData;
-     charts.timeline.update();
-     
-     // Grafico Efficienza
-     const efficienzaLabels = [];
-     const efficienzaData = [];
-     
-     data.fornitori.forEach(f => {
-         const nome = f.nome === 'ALTRO' ? f.altroNome : f.nome;
-         if (nome && f.quantitaTrasformata > 0 && f.quantitaEntrata > 0) {
-             const efficienza = (f.quantitaTrasformata / f.quantitaEntrata) * 100;
-             efficienzaLabels.push(nome);
-             efficienzaData.push(efficienza.toFixed(1));
-         }
-     });
-     
-     charts.efficienza.data.labels = efficienzaLabels;
-     charts.efficienza.data.datasets[0].data = efficienzaData;
-     charts.efficienza.update();
-     
-     // Grafico Destinazioni
-     const destinazioni = {};
-     data.fornitori.forEach(f => {
-         if (f.destinazioni.prima) {
-             const dests = f.destinazioni.prima.split(', ');
-             dests.forEach(dest => {
-                 if (dest && dest !== 'N/D') {
-                     destinazioni[dest] = (destinazioni[dest] || 0) + f.quantitaProdotti.prima;
-                 }
-             });
-         }
-     });
-     
-     charts.destinazioni.data.labels = Object.keys(destinazioni);
-     charts.destinazioni.data.datasets[0].data = Object.values(destinazioni);
-     charts.destinazioni.update();
  }
  
  // Raccolta dati programma - MODIFICATA per supportare combinazioni A e B
@@ -2984,54 +2504,41 @@ $(document).ready(function() {
      addSupplier();
  });
  
- // Pulsante apri statistiche
- $('#apri-statistiche').click(function() {
-     openStatistics();
- });
- 
- // Pulsante Rese - NUOVO
+ // Pulsante Rese
  $('#rese-button').click(function() {
      openYieldsModal();
  });
  
- // Chiudi modal statistiche
- $('.close-stats').click(function() {
-     closeStatistics();
- });
- 
- // Chiudi modal rese - NUOVO
+ // Chiudi modal rese
  $('.close-yields').click(function() {
      closeYieldsModal();
  });
  
- // Salva rese - NUOVO
+ // Salva rese
  $('#salva-rese').click(function() {
      saveYieldsData();
  });
  
- // Reset rese - NUOVO
+ // Reset rese
  $('#reset-rese').click(function() {
      resetYieldsData();
  });
  
  // Chiudi modal cliccando fuori
  $(window).click(function(event) {
-     if (event.target.id === 'stats-modal') {
-         closeStatistics();
-     }
      if (event.target.id === 'yields-modal') {
          closeYieldsModal();
      }
  });
  
- // Anteprima stampa - MODIFICATA per layout a colonne
+ // Anteprima stampa - MODIFICATA per layout a colonne ordinato
  $('#anteprima-stampa').click(function() {
      const programData = collectProgramData();
-     generateColumnPrintPreview(programData);
+     generateOrderedColumnPrintPreview(programData);
  });
  
- // Generazione anteprima stampa con layout a colonne - NUOVA FUNZIONE
- function generateColumnPrintPreview(data) {
+ // Generazione anteprima stampa con layout a colonne ordinato - NUOVA FUNZIONE
+ function generateOrderedColumnPrintPreview(data) {
      const printWindow = window.open('', '_blank');
      
      // Calcola totali per Succo 2ª e Torchiato
@@ -3061,128 +2568,129 @@ $(document).ready(function() {
                  
                  body { 
                      font-family: 'Arial', sans-serif;
-                     font-size: 10px;
-                     line-height: 1.2;
+                     font-size: 8px;
+                     line-height: 1.1;
                      color: #333;
-                     margin: 10px;
+                     margin: 8px;
                  }
                  
                  .header {
                      text-align: center;
-                     margin-bottom: 15px;
+                     margin-bottom: 12px;
                      border-bottom: 2px solid #1e3c72;
-                     padding-bottom: 8px;
+                     padding-bottom: 6px;
                  }
                  
                  .header h1 {
-                     font-size: 16px;
+                     font-size: 14px;
                      color: #1e3c72;
-                     margin-bottom: 4px;
+                     margin-bottom: 3px;
                  }
                  
                  .header-info {
                      display: flex;
                      justify-content: space-around;
-                     margin-top: 8px;
-                     font-size: 9px;
+                     margin-top: 6px;
+                     font-size: 7px;
                  }
                  
                  .totals-grid {
                      display: grid;
                      grid-template-columns: repeat(3, 1fr);
-                     gap: 6px;
-                     margin-bottom: 15px;
+                     gap: 4px;
+                     margin-bottom: 12px;
                  }
                  
                  .total-item {
                      text-align: center;
-                     padding: 8px;
+                     padding: 6px;
                      background-color: #e7f3ff;
                      border: 1px solid #2a5298;
-                     border-radius: 4px;
+                     border-radius: 3px;
                  }
                  
                  .total-value {
-                     font-size: 12px;
+                     font-size: 10px;
                      font-weight: bold;
                      color: #1e3c72;
                  }
                  
                  .total-label {
-                     font-size: 8px;
+                     font-size: 6px;
                      color: #666;
                  }
                  
                  .suppliers-grid {
                      display: grid;
-                     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-                     gap: 15px;
-                     margin-bottom: 15px;
+                     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                     gap: 8px;
+                     margin-bottom: 12px;
                  }
                  
                  .supplier-column {
                      border: 2px solid #1e3c72;
-                     border-radius: 8px;
+                     border-radius: 6px;
                      page-break-inside: avoid;
                      background-color: #f8f9fa;
+                     min-height: 300px;
                  }
                  
                  .supplier-header {
                      background-color: #1e3c72;
                      color: white;
-                     padding: 8px;
+                     padding: 6px;
                      text-align: center;
                      font-weight: bold;
-                     font-size: 12px;
+                     font-size: 10px;
                  }
                  
                  .supplier-content {
-                     padding: 10px;
+                     padding: 8px;
                  }
                  
                  .info-section {
-                     margin-bottom: 8px;
-                     padding: 6px;
-                     border-radius: 4px;
+                     margin-bottom: 6px;
+                     padding: 4px;
+                     border-radius: 3px;
                  }
                  
                  .fruit-info {
                      background-color: #e8f5e8;
-                     border-left: 3px solid #28a745;
+                     border-left: 2px solid #28a745;
                  }
                  
                  .processing-info {
                      background-color: #fff3cd;
-                     border-left: 3px solid #ffc107;
+                     border-left: 2px solid #ffc107;
                  }
                  
                  .timing-info {
                      background-color: #cff4fc;
-                     border-left: 3px solid #0dcaf0;
+                     border-left: 2px solid #0dcaf0;
                  }
                  
                  .products-info {
                      background-color: #f8d7da;
-                     border-left: 3px solid #dc3545;
+                     border-left: 2px solid #dc3545;
                  }
                  
                  .info-label {
                      font-weight: bold;
-                     font-size: 8px;
+                     font-size: 6px;
                      color: #666;
                      text-transform: uppercase;
                  }
                  
                  .info-value {
-                     font-size: 10px;
-                     margin-top: 2px;
+                     font-size: 8px;
+                     margin-top: 1px;
                      word-wrap: break-word;
                  }
                  
                  .highlighted-value {
                      font-weight: bold;
                      color: #1e3c72;
-                     font-size: 11px;
+                     font-size: 9px;
                  }
                  
                  .bio-text {
@@ -3218,43 +2726,46 @@ $(document).ready(function() {
                  .summary-section {
                      display: grid;
                      grid-template-columns: 1fr 1fr;
-                     gap: 10px;
-                     margin-top: 15px;
+                     gap: 8px;
+                     margin-top: 12px;
                  }
                  
                  .summary-box {
                      border: 1px solid #ddd;
-                     padding: 8px;
+                     padding: 6px;
                      background-color: #f8f9fa;
-                     border-radius: 4px;
+                     border-radius: 3px;
                  }
                  
                  .summary-title {
                      font-weight: bold;
                      color: #1e3c72;
-                     margin-bottom: 6px;
-                     font-size: 10px;
+                     margin-bottom: 4px;
+                     font-size: 8px;
                  }
                  
                  .summary-item {
                      display: flex;
                      justify-content: space-between;
-                     margin-bottom: 2px;
-                     font-size: 8px;
+                     margin-bottom: 1px;
+                     font-size: 7px;
                  }
                  
                  .footer {
                      text-align: center;
-                     margin-top: 15px;
-                     font-size: 7px;
+                     margin-top: 12px;
+                     font-size: 6px;
                      color: #666;
                      border-top: 1px solid #ddd;
-                     padding-top: 8px;
+                     padding-top: 6px;
                  }
                  
                  @media print {
                      body { margin: 5px; }
-                     .header h1 { font-size: 14px; }
+                     .header h1 { font-size: 12px; }
+                     .suppliers-grid {
+                         grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+                     }
                  }
              </style>
          </head>
@@ -3288,46 +2799,28 @@ $(document).ready(function() {
              <div class="suppliers-grid">
      `;
      
-     // Prima aggiungi le colonne per fornitori in combinazione A
-     if (data.combinationDetailsA && data.combinationDetailsA.length > 0) {
-         data.combinationDetailsA.forEach((detail) => {
-             const fullSupplierData = data.fornitori.find(f => f.supplierIndex === detail.supplierIndex);
-             
-             if (fullSupplierData) {
-                 printContent += generateSupplierColumn(fullSupplierData, detail.supplierIndex, 'A');
-             }
-         });
+     // Crea array ordinato di fornitori da F1 a Fn
+     const orderedSuppliers = [];
+     for (let i = 1; i <= data.fornitori.length; i++) {
+         const supplier = data.fornitori.find(f => f.supplierIndex === i);
+         if (supplier) {
+             orderedSuppliers.push(supplier);
+         }
      }
      
-     // Poi aggiungi le colonne per fornitori in combinazione B
-     if (data.combinationDetailsB && data.combinationDetailsB.length > 0) {
-         data.combinationDetailsB.forEach((detail) => {
-             const fullSupplierData = data.fornitori.find(f => f.supplierIndex === detail.supplierIndex);
-             
-             if (fullSupplierData) {
-                 printContent += generateSupplierColumn(fullSupplierData, detail.supplierIndex, 'B');
-             }
-         });
-     }
-     
-     // Infine aggiungi le colonne per fornitori normali
-     data.fornitori.forEach((fornitore) => {
-         if (!fornitore.nome) return;
-         
+     // Genera colonne nell'ordine corretto
+     orderedSuppliers.forEach(fornitore => {
+         // Determina se il fornitore fa parte di combinazioni
          const isInCombinationA = data.combinationSupplierIndexesA && 
              data.combinationSupplierIndexesA.includes(fornitore.supplierIndex);
          const isInCombinationB = data.combinationSupplierIndexesB && 
              data.combinationSupplierIndexesB.includes(fornitore.supplierIndex);
          
-         // Se non fa parte di combinazioni, o se fa parte di una combinazione ma è l'ultimo (quello con il risultato)
-         if ((!isInCombinationA && !isInCombinationB) || fornitore.hasCombination) {
-             // Se ha combinazione, salta perché è già stato mostrato sopra
-             if (fornitore.hasCombination) {
-                 return;
-             }
-             
-             printContent += generateSupplierColumn(fornitore, fornitore.supplierIndex, null);
-         }
+         let combinationType = null;
+         if (isInCombinationA) combinationType = 'A';
+         if (isInCombinationB) combinationType = 'B';
+         
+         printContent += generateSupplierColumn(fornitore, fornitore.supplierIndex, combinationType);
      });
      
      printContent += `
@@ -3377,7 +2870,7 @@ $(document).ready(function() {
                              <span>${lastValidSupplierBOE.caratteristicheProdotti?.seconda?.conservato || 'N/D'}</span>
                          </div>
                          ${data.sumDetailsSeconda && data.sumDetailsSeconda.length > 1 ? `
-                             <div style="margin-top: 4px; font-size: 7px; color: #666;">
+                             <div style="margin-top: 3px; font-size: 6px; color: #666;">
                                  <strong>Dettaglio:</strong> ${formatSumDetails(data.sumDetailsSeconda, 'seconda')}
                              </div>
                          ` : ''}
@@ -3408,7 +2901,7 @@ $(document).ready(function() {
                              </div>
                          ` : ''}
                          ${data.sumDetailsTorchiato && data.sumDetailsTorchiato.length > 1 ? `
-                             <div style="margin-top: 4px; font-size: 7px; color: #666;">
+                             <div style="margin-top: 3px; font-size: 6px; color: #666;">
                                  <strong>Dettaglio:</strong> ${formatSumDetails(data.sumDetailsTorchiato, 'torchiato')}
                              </div>
                          ` : ''}
@@ -3451,7 +2944,7 @@ $(document).ready(function() {
                              </div>
                          ` : ''}
                          ${data.sumDetailsTorchiato && data.sumDetailsTorchiato.length > 1 ? `
-                             <div style="margin-top: 4px; font-size: 7px; color: #666;">
+                             <div style="margin-top: 3px; font-size: 6px; color: #666;">
                              <strong>Dettaglio:</strong> ${formatSumDetails(data.sumDetailsTorchiato, 'torchiato')}
                              </div>
                          ` : ''}
@@ -3475,7 +2968,7 @@ $(document).ready(function() {
      printWindow.focus();
  }
  
- // Funzione per generare una singola colonna fornitore - NUOVA
+ // Funzione per generare una singola colonna fornitore - AGGIORNATA per colonne più compatte
  function generateSupplierColumn(fornitore, supplierIndex, combinationType) {
      const nomeFornitore = fornitore.nome === 'ALTRO' ? fornitore.altroNome : fornitore.nome;
      const nomeVarieta = fornitore.varieta === 'ALTRO' ? fornitore.altraVarieta : fornitore.varieta;
@@ -3533,19 +3026,19 @@ $(document).ready(function() {
                      <div class="info-label">Fornitore</div>
                      <div class="info-value highlighted-value">${nomeFornitore || 'N/D'}</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">Q. in Ingresso</div>
+                     <div class="info-label" style="margin-top: 3px;">Q. in Ingresso</div>
                      <div class="info-value highlighted-value">${fornitore.quantitaEntrata} kg</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">Q. da Trasformare</div>
+                     <div class="info-label" style="margin-top: 3px;">Q. da Trasformare</div>
                      <div class="info-value highlighted-value">${fornitore.quantitaTrasformata} kg</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">Q. Rimanenza</div>
+                     <div class="info-label" style="margin-top: 3px;">Q. Rimanenza</div>
                      <div class="info-value highlighted-value">${fornitore.giacenza} kg</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">Certificazione</div>
+                     <div class="info-label" style="margin-top: 3px;">Certificazione</div>
                      <div class="info-value ${bioClass}">${certificationBadge}</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">Varietà</div>
+                     <div class="info-label" style="margin-top: 3px;">Varietà</div>
                      <div class="info-value ${bioClass}">${nomeVarieta || 'N/D'}</div>
                  </div>
                  
@@ -3560,10 +3053,10 @@ $(document).ready(function() {
                      <div class="info-label">Orario Inizio</div>
                      <div class="info-value">${fornitore.orarioInizio || '-'}</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">Portata Impianto</div>
+                     <div class="info-label" style="margin-top: 3px;">Portata Impianto</div>
                      <div class="info-value">${fornitore.portataImpianto} kg/h</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">Orario Fine</div>
+                     <div class="info-label" style="margin-top: 3px;">Orario Fine</div>
                      <div class="info-value highlighted-value">${orarioFineClean || '-'}</div>
                  </div>
                  
@@ -3572,27 +3065,27 @@ $(document).ready(function() {
                      <div class="info-label">Succo 1ª</div>
                      <div class="info-value highlighted-value">${fornitore.quantitaProdotti.prima} kg</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">Pastorizzato</div>
+                     <div class="info-label" style="margin-top: 3px;">Pastorizzato</div>
                      <div class="info-value">${pastorizzato}</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">Destinazione</div>
-                     <div class="info-value ${destBioClass}" style="font-size: 8px;">${destPrima}</div>
+                     <div class="info-label" style="margin-top: 3px;">Destinazione</div>
+                     <div class="info-value ${destBioClass}" style="font-size: 7px;">${destPrima}</div>
                      
                      ${note ? `
-                         <div class="info-label" style="margin-top: 4px;">Note</div>
-                         <div class="info-value" style="font-size: 8px;">${note}</div>
+                         <div class="info-label" style="margin-top: 3px;">Note</div>
+                         <div class="info-value" style="font-size: 7px;">${note}</div>
                      ` : ''}
                      
-                     <div class="info-label" style="margin-top: 4px;">Polpa</div>
+                     <div class="info-label" style="margin-top: 3px;">Polpa</div>
                      <div class="info-value">${polpa}</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">°BX</div>
+                     <div class="info-label" style="margin-top: 3px;">°BX</div>
                      <div class="info-value">${brix}</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">Conservato</div>
+                     <div class="info-label" style="margin-top: 3px;">Conservato</div>
                      <div class="info-value">${conservato}</div>
                      
-                     <div class="info-label" style="margin-top: 4px;">Bio</div>
+                     <div class="info-label" style="margin-top: 3px;">Bio</div>
                      <div class="info-value ${destBioClass}">${bioStatus}</div>
                  </div>
              </div>
@@ -3631,7 +3124,6 @@ $(document).ready(function() {
      
      return isValid;
  }
- 
  // Reset programma
  $('#reset-programma').click(function() {
      if (confirm('Attenzione: questa operazione cancellerà tutti i dati inseriti. Continuare?')) {
@@ -3642,7 +3134,7 @@ $(document).ready(function() {
  // Inizializzazione
  initCurrentDate();
  
- console.log('Sistema Programma Giornaliero Trasformazione inizializzato con successo - Con layout a colonne per anteprima di stampa, varietà dinamiche per agrumi, gestione rese personalizzata e combinazioni A/B');
+ console.log('Sistema Programma Giornaliero Trasformazione inizializzato con successo - Layout a colonne ordinato, senza statistiche interattive, con gestione rese personalizzata e combinazioni A/B');
 });
 </script>
 </body>
